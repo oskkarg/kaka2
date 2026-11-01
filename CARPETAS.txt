@@ -1,0 +1,40 @@
+div8-console/
+│
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+├── README.md
+│
+├── public/
+│   └── favicon.ico
+│
+└── src/
+    ├── main.tsx
+    ├── App.tsx
+    ├── index.css
+    │
+    ├── components/
+    │   ├── Header.tsx
+    │   ├── CodeEditor.tsx
+    │   ├── ScreenCanvas.tsx
+    │   ├── VirtualGamepad.tsx
+    │   ├── SpriteEditor.tsx
+    │   ├── SfxStudio.tsx
+    │   ├── ReferenceDocs.tsx
+    │   └── ProcessInspector.tsx
+    │
+    ├── demos/
+    │   ├── index.ts              ← exporta CARTRIDGES
+    │   └── newProject.ts         ← plantilla de proyecto nuevo
+    │
+    └── engine/
+        ├── types.ts              ← Sprite, ProcessInstance, Cartridge, GamepadState, etc.
+        ├── compiler.ts           ← DivCompiler + DivCodeGen (generador JS)
+        ├── divParser.ts          ← DivParser (AST de DIV Games Studio)
+        ├── tokenNormalizer.ts    ← sinónimos ES → EN canónico
+        ├── runtime.ts            ← DivRuntime (scheduler, renderer, input)
+        ├── sprites.ts            ← DEFAULT_SPRITES + framebuffer indexado + blit
+        ├── palette.ts            ← paleta 256 colores + LUT RGBA
+        └── audio.ts              ← SoundEngine (Web Audio 8-bit)

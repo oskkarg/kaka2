@@ -1,0 +1,5 @@
+{
+  "name": "DIV-8 Fantasy Console",
+  "description": "Consola de fantasía retro estilo PICO-8 con editor de juegos y motor de sintaxis directa DIV Games Studio",
+  "requestFramePermissions": []
+}

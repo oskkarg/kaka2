@@ -1,0 +1,142 @@
+eordenación de la lista completa
+Prioridad 0 (bloqueante, sin esto no hay DIV):
+
+Funciones de usuario (funcion/function).
+
+Tablas / arrays (declaración, acceso, asignación, multidimensionales).
+
+recorre con contexto de tabla y resolución de propiedades implícitas.
+
+for, else if, while, operadores lógicos (ya estaban en Prioridad 1; suben aquí porque sin ellos ni las funciones ni las tablas se pueden usar bien).
+
+Prioridad 1 (correctitud del resto del lenguaje):
+
+return con valor dentro de funciones y procesos.
+
+Llamadas a procesos con argumentos anidados y parent correcto.
+
+Constantes de usuario (constantes: / constants:) accesibles desde el código.
+
+si ... sino si ... sino ... fin encadenado.
+
+repeat ... until y while ... do.
+
+Prioridad 2 (rendimiento, ya estaba):
+
+Compactar processes in-place en tick().
+
+Caché de sprites por ID en el runtime.
+
+Límite de procesos / presupuesto de frame.
+
+Errores con línea del código DIV original.
+
+Prioridad 3 (funcionalidad DIV que falta):
+
+angle continuo (no solo múltiplos de 90°).
+
+alpha real o documentar que no se soporta.
+
+collision con bounding box.
+
+signal con s_freeze, s_wakeup, s_sleep.
+
+let_me_alone + reinicio limpio.
+
+Prioridad 4 (editor y DX):
+
+Resaltado de sintaxis.
+
+Autocompletado básico.
+
+print/trace a la consola.
+
+Guardado automático en localStorage.
+
+Formatear código.
+
+Depurador paso a paso por proceso.
+
+Prioridad 5 (contenido y documentación):
+
+Cartuchos de ejemplo con funciones y tablas.
+
+Manual con ejemplos ejecutables.
+
+Guía de migración DIV → DIV-8.
+
+Documentar z.
+
+Prioridad 6 (pulido):
+
+Fullscreen con aspect ratio.
+
+Pausa sin frames acumulados.
+
+step() con render.
+
+Errores con contexto de código.
+
+Limpieza de caché al importar cartucho.
+
+Sonido: stop, volume, loop.
+
+Gamepad físico.
+
+--=============================================================================
+--=============================================================================
+--=============================================================================
+Lo que queda del lenguaje (por prioridad)
+Prioridad 0 — bloqueante:
+
+father correcto en procesos hijos (leer y usar).
+
+get_id(0) para el proceso principal (ya está implementado en runtime, pero no probado).
+
+TYPE como keyword en collision, signal, etc. (ya funciona en get_id, extenderlo).
+
+Operadores lógicos completos en casos complejos (paréntesis anidados, cortocircuito).
+
+Prioridad 1 — correctitud:
+
+LOCAL del programa (variables heredadas por cada proceso).
+
+Constantes de sistema: SCREEN_WIDTH, SCREEN_HEIGHT, nombres de colores.
+
+signal con s_freeze, s_wakeup, s_sleep.
+
+move, advance, scroll para movimiento de procesos.
+
+get_process(id) explícito (aunque id.x ya funciona).
+
+Prioridad 2 — rendimiento:
+
+Compactar processes in-place en tick().
+
+Caché de sprites por ID en el runtime.
+
+Límite de procesos.
+
+Errores con línea del código DIV original.
+
+--=============================================
+--=============================================
+Yo permitiría:
+- Atlas de tamaño configurable.
+- Varios atlas.
+- Sprites de cualquier dimensión razonable.
+- Transparencia.
+- Espacios entre gráficos para evitar problemas de filtrado.
+- Reorganización automática del atlas.
+Mi recomendación técnica
+Mantendría dos conceptos separados:
+
+Gráfico: el recurso individual que conoce el usuario.
+
+Atlas: el almacenamiento físico donde se empaquetan los gráficos.
+
+Así, el motor puede cambiar la organización interna sin modificar el lenguaje DIV ni el código de los juegos.
+
+Y hay una ventaja importante para tu framebuffer indexado: puedes seguir copiando los píxeles del sprite desde el atlas hacia el framebuffer sin cambiar la filosofía de renderizado.
+
+Yo lo haría, pero no cambiaría ahora todo el motor. Primero implementaría un atlas sencillo y haría que getSpriteById() devolviese los datos del gráfico con sus coordenadas dentro del atlas. Después modificaría blitSprite() para leer directamente de esa región.
